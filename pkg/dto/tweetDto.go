@@ -6,11 +6,11 @@ import (
 )
 
 type TweetDto struct {
-	Id                      string
-	Name                    string
-	ScreenName              string
-	Location                time.Location
-	Description             string
+	Id                      string        `json:"id"`
+	Name                    string        `json:"name"`
+	ScreenName              string        `json:"ScreenName"`
+	Location                time.Location `json:"location"`
+	Description             string        `json:"description"`
 	ProfileImageURL         string
 	MiniProfileImageURL     string
 	OriginalProfileImageURL string
@@ -19,7 +19,7 @@ type TweetDto struct {
 	TimeZone                string
 }
 
-func (t TweetDto) toTweetDomain() domain.UserTweet {
+func (t TweetDto) ToTweetDomain() domain.UserTweet {
 	return domain.UserTweet{
 		Id:                      t.Id,
 		Name:                    t.Name,

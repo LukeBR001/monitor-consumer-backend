@@ -11,6 +11,7 @@ func main() {
 
 	router := bunrouter.New()
 	router.GET("/", handle.GetTwitters)
+	router.POST("/tweet", handle.CreateTweet)
 
 	fmt.Println("Server running...")
 
