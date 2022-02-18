@@ -9,18 +9,28 @@ import (
 	"src/pkg/service"
 )
 
-func GetTwitters(w http.ResponseWriter, r bunrouter.Request) error {
-	response := service.GetTweetsService()
+func NewHandle(s service.Service) Handle {
+	return Handle{
+		service: s,
+	}
+}
+
+type Handle struct {
+	service service.Service
+}
+
+func (h Handle) GetTwitters(w http.ResponseWriter, r bunrouter.Request) error {
+	response := h.service.GetTweetsService()
 	writeResponse(w, 200, response)
 	return nil
 }
 
-func CreateTweet(w http.ResponseWriter, r bunrouter.Request) error {
+func (h Handle) CreateTweet(w http.ResponseWriter, r bunrouter.Request) error {
 	var tweetRequest dto.TweetDto
 
 	err := ReadRequest(r, &tweetRequest)
 
-	response := service.CreateTweet(tweetRequest)
+	response := h.service.CreateTweet(tweetRequest)
 
 	if err != nil {
 		writeResponse(w, 400, "deu pau pra parsear")

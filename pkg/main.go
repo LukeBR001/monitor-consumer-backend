@@ -4,14 +4,23 @@ import (
 	"fmt"
 	"github.com/uptrace/bunrouter"
 	"net/http"
+	"src/pkg/database"
 	"src/pkg/handle"
+	"src/pkg/repository"
+	"src/pkg/service"
 )
 
 func main() {
 
+	dbConecct := database.CreateDbConnection()
+
+	repo := repository.NewRepository(dbConecct)
+	serv := service.NewService(repo)
+	hand := handle.NewHandle(serv)
+
 	router := bunrouter.New()
-	router.GET("/", handle.GetTwitters)
-	router.POST("/tweet", handle.CreateTweet)
+	router.GET("/", hand.GetTwitters)
+	router.POST("/tweet", hand.CreateTweet)
 
 	fmt.Println("Server running...")
 
